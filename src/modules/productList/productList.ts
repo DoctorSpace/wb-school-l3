@@ -25,7 +25,6 @@ export class ProductList {
 
   render() {
     this.view.root.innerHTML = '';
-
     this.products.forEach((product) => {
       const productComp = new Product(product);
       productComp.render();
