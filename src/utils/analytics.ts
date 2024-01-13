@@ -5,8 +5,6 @@ export const sendEvent = (type: string, payload: any) => {
     timestamp: Date.now()
   };
 
-  console.log('event', event);
-
   fetch('/api/sendEvent', {
     method: 'POST',
     headers: {

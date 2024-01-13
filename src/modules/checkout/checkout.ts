@@ -1,7 +1,7 @@
 import { Component } from '../component';
 import { Product } from '../product/product';
 import html from './checkout.tpl.html';
-import { formatPrice } from '../../utils/helpers';
+import { formatPrice, genUUID } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
 import { sendEvent } from '../../utils/analytics';
@@ -42,7 +42,7 @@ class Checkout extends Component {
       body: JSON.stringify(this.products)
     }).then(() => {
       sendEvent('purchase', {
-        // orderId: "this.id",
+        orderId: genUUID(),
         totalPrice: this.totalPrice,
         productIds: this.products.map(product => product.id)
       });
