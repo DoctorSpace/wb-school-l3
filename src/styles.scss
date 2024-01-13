@@ -1,9 +1,12 @@
 @import 'modules/**/*.scss';
 
 body {
+  --system-black: #000;
+  --system-smoky-deep-dark: #E6E1EF;
   --text-light-color: #9797af;
   --key-color: #cb11ab;
   --key-color-dark: #a2097b;
+  --system-gradient-violet: linear-gradient(93deg, #DA15B8 4.93%, #8D06CC 100%);
   --plate-color: #f6f6fa;
   --border-radius: 20px;
 

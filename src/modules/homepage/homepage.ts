@@ -1,14 +1,17 @@
 import { addElement } from '../../utils/helpers';
 import { Component } from '../component';
 import html from './homepage.tpl.html';
-
 import { ProductList } from '../productList/productList';
+import searchTips from '../searchTips/searchTips'
 
 class Homepage extends Component {
   popularProducts: ProductList;
 
   constructor(props: any) {
     super(props);
+
+    searchTips.attach(this.view.search);
+    searchTips.render()
 
     this.popularProducts = new ProductList();
     this.popularProducts.attach(this.view.popular);

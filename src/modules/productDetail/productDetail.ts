@@ -5,6 +5,7 @@ import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 
+
 class ProductDetail extends Component {
   more: ProductList;
   product?: ProductData;
