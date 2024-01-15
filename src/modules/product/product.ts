@@ -1,8 +1,9 @@
 import { ViewTemplate } from '../../utils/viewTemplate';
 import { View } from '../../utils/view';
-import { formatPrice } from '../../utils/helpers'
+import { formatPrice } from '../../utils/helpers';
 import html from './product.tpl.html';
 import { ProductData } from 'types';
+import { sendEvent } from '../../utils/analytics';
 
 type ProductComponentParams = { [key: string]: any };
 
@@ -21,6 +22,21 @@ export class Product {
     $root.appendChild(this.view.root);
   }
 
+  productObserver = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+    entries.forEach(async (entry) => {
+      if (entry.isIntersecting) {
+        const secretKey = await fetch(`/api/getProductSecretKey?id=${this.product.id}`)
+          .then((res) => res.json())
+          .then((secretKey) => secretKey);
+
+        const type = this.product?.log.length !== 0 ? 'viewCard' : 'viewCardPromo';
+        sendEvent(type, { ...this.product, secretKey: secretKey })
+
+        observer.unobserve(entry.target);
+      }
+    });
+  };
+
   render() {
     const { id, name, src, salePriceU } = this.product;
 
@@ -29,6 +45,9 @@ export class Product {
     this.view.title.innerText = name;
     this.view.price.innerText = formatPrice(salePriceU);
 
-    if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal')
+    if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal');
+
+    const observer = new IntersectionObserver(this.productObserver, { threshold: 0 });
+    observer.observe(this.view.root);
   }
 }
