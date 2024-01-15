@@ -5,60 +5,6 @@
   display: flex;
   flex-direction: column;
 
-  z-index: 1;
-
-  &__input {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 60px;
-    width: 100%;
-
-    input {
-      position: absolute;
-      width: 100%;
-      max-width: 780px;
-      height: 46px;
-
-      font-size: 30px;
-      border: 0;
-      z-index: 4;
-
-      &::placeholder {
-        color: var(--system-smoky-deep-dark);
-      }
-      &:focus {
-        outline: none;
-      }
-    }
-  }
-
-  &__background {
-    position: absolute;
-    width: 100%;
-    height: 60px;
-
-    z-index: 1;
-  }
-
-  &__input-buttonPlace {
-    position: absolute;
-    width: 100%;
-    max-width: 896px;
-
-    display: flex;
-    justify-content: space-between;
-
-    z-index: 2;
-  }
-
-  &__icon {
-    height: 60px;
-    width: 60px;
-    cursor: pointer;
-  }
-
   &__examples {
     display: flex;
     flex-wrap: wrap;
