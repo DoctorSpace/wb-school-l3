@@ -4,6 +4,7 @@ import html from './searchTips.tpl.html';
 import { Component } from '../component';
 
 const SearchTipsName: string[] = ['чехол iphone 13 pro', 'коляски agex', 'яндекс станция 2'];
+const baseURL: string = 'https://www.wildberries.ru/catalog/0/search.aspx?search='
 
 class SearchTips extends Component {
   view: View;
@@ -18,10 +19,18 @@ class SearchTips extends Component {
     $root.appendChild(this.view.root);
   }
 
-  private createElement = (tag: string, className: string, text?: string) => {
+  private createElement = (tag: string, className: string, text?: string, link?: string) => {
     const elem = document.createElement(tag);
     elem.className = className;
     if (text) elem.textContent = text;
+
+    if (link) {
+      if (tag === 'a') {
+        (elem as HTMLAnchorElement).href = link;
+        (elem as HTMLAnchorElement).target = '_blank';
+      }
+    }
+
     return elem;
   };
 
@@ -35,12 +44,10 @@ class SearchTips extends Component {
     tipsContainer.appendChild(this.createElement('span', 'search__normal-text', 'Например,'));
 
     SearchTips.forEach((SearchTip, index) => {
-      const tipExampleElem = this.createElement('div', 'search__example');
-      tipExampleElem.appendChild(this.createElement('span', 'search__example-text', SearchTip));
-      tipExampleElem.addEventListener('click', () => {
-        console.log('Запрос', SearchTip);
-      });
+      const link = `${baseURL}${SearchTip}`;
 
+      const tipExampleElem = this.createElement('div', 'search__example');
+      tipExampleElem.appendChild(this.createElement('a', 'search__example-text', SearchTip, link));
       tipsContainer.appendChild(tipExampleElem);
 
       if (index == SearchTips.length - 1) {
@@ -58,7 +65,7 @@ class SearchTips extends Component {
     if (SearchTipsName.length == 0 && this.view.root.parentElement) {
       this.view.root.parentElement.classList.add('hide');
       return;
-    } 
+    }
 
     this.view.root.appendChild(this.addSearchTips(SearchTipsName));
   }
